@@ -40,7 +40,7 @@ public class SceneShaderProgram extends ShaderProgram {
         createUniform("model");
         createUniform("isPerson");
         createUniform("texture_sampler");
-        createUniform("rotationMatrices");
+        //createUniform("rotationMatrices");
     }
 
     @Override
@@ -69,14 +69,14 @@ public class SceneShaderProgram extends ShaderProgram {
         for (int i = 0; i < complexEffects.size(); i++)
             effects.setSubDataArrays(i, complexEffects.get(i), personCameraLocation);
 
-        if (complexEffects.size() > 0) {
+        /*if (complexEffects.size() > 0) {
             ComplexRotationEffect complexRotationEffect = (ComplexRotationEffect) complexEffects.get(0);
             if (!complexRotationEffect.isStaticInitializedInShader()) {
                 Septet<Vector, Float, Vector, Vector, Matrix4f[], Matrix4f, Matrix4f> data = complexRotationEffect.getStaticDataAndSetShader().getValue();
                 Matrix4f[] rotationMatrices = data.getValue4();
                 setUniform("rotationMatrices", rotationMatrices);
             }
-        }
+        }*/
     }
 
     public void setLightsUniformBuffer(int offset, float value) {
