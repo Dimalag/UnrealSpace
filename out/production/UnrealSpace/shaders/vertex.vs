@@ -15,7 +15,7 @@ const int ALL_TRANSFORMATION_MAX_SIZE = SIMPLE_TRANSFORMATION_MAX_SIZE + COMPLEX
 const int SIMPLE_MATRIX_TYPE = 1;
 const int COMPLEX_ROTATION_TYPE = 2;
 
-const int COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE = 30; //rotation matrices count in complex effects
+const int COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE = 120; //rotation matrices count in complex effects
 
 struct SimpleTransformation
 {
@@ -40,7 +40,7 @@ struct ComplexTransformation
     vec3 endLocation;               //16                        //32
 
                                     //16                        //48
-    mat4 rotationMatrices[COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE]; // complex rotation matrices
+    //mat4 rotationMatrices[COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE]; // complex rotation matrices
 
     //matrix offset translate
     mat4 offsetTranslate;           //16                        //48+64*COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE
@@ -81,57 +81,62 @@ layout (std140, binding = 1) uniform TransformationsBlock
 uniform int isPerson;
 uniform mat4 model;
 
-//float value_to_0_2PI_diapazon(float value)
-//{
-//    if (value < 0)
-//        return 2*M_PI-mod(-value, 2*M_PI);
-//    else
-//        return mod(value, 2*M_PI);
-//}
+uniform mat4 rotationMatrices[300]; // complex rotation matrices
 
 float value_to_0_2PI_diapazon(float value)
 {
     if (value < 0)
+        return 2*M_PI-mod(-value, 2*M_PI);
+    else
+        return mod(value, 2*M_PI);
+}
+
+/*float value_to_0_2PI_diapazon(float value)
+{
+    if (value < 0)
         return 2*M_PI - value;
     return value;
-}
+}*/
 
 mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformation)
 {
-    /*//calculating distance from object vertex to person location with projection to direction axes
+    //calculating distance from object vertex to person location with projection to direction axes
     vec3 dir = complexTransformation.direction;
     float dist = dot(personLocation - position, dir) / length(dir);
     //calculating rotation angle
     float angle = 2 * M_PI * dist / complexTransformation.distance * complexTransformation.coefficient;
 
+<<<<<<< Updated upstream
     int index = int(value_to_0_2PI_diapazon(angle) / 2 / M_PI * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);*/
     int test = 0;
+=======
+    int index = int(value_to_0_2PI_diapazon(angle) / 2 / M_PI * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);
+
+>>>>>>> Stashed changes
 
 
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //calculating distance from object vertex to person location with projection to direction axes
+    /*//calculating distance from object vertex to person location with projection to direction axes
     float integerPart = 0;
     vec3 dir = complexTransformation.direction;
-    float dist = modf(dot(personLocation - position, dir) / length(dir), integerPart);
+    float dist = dot(personLocation - position, dir) / length(dir);
     //calculating rotation angle
     //float angle = 2 * M_PI * dist / complexTransformation.distance * complexTransformation.coefficient;
-    //int index = int(abs(dist) / complexTransformation.distance * complexTransformation.coefficient * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);
-    int index = int(personLocation.z * complexTransformation.coefficient);
+    int index = int(abs(dist) / complexTransformation.distance * complexTransformation.coefficient * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);
+    //int index = int(personLocation.z * complexTransformation.coefficient);*/
+    mat4 result = complexTransformation.offsetTranslate;
     if (index >= 0 && index < COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE)
-        return complexTransformation.rotationMatrices[index];
+        result = result * rotationMatrices[index];
     else
-        return complexTransformation.rotationMatrices[COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE/2];
+        result = result * mat4(0);
+    result = result * complexTransformation.offsetTranslateNegative;
+    return result;
 
 
 
-
-
-
-
-
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*float ca = cos(angle);
     float sa = sin(angle);
     //calculating rotation matrix around direction axis on angle

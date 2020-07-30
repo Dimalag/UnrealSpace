@@ -45,6 +45,13 @@ public abstract class Effect extends EffectRegion {
         return null;
     }
 
+    /**
+     * отменяет статичные данные эффекта заданными в шейдер, устанавливает isInitializedInShader в false
+     */
+    public void unsetStaticData() {
+        isInitializedInShader = false;
+    }
+
 
     /**
      * @return true, динамические данные эффекта были обновлены в шейдере (нет изменений)

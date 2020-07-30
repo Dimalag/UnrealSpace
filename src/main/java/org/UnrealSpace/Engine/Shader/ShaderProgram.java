@@ -4,8 +4,10 @@ import org.UnrealSpace.Engine.Graph.Model.Material;
 import org.UnrealSpace.Helpers.Vector;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryStack;
 
+import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -98,6 +100,17 @@ public abstract class ShaderProgram {
         setUniform(uniformName + ".specular", material.getSpecularColour());
         setUniform(uniformName + ".hasTexture", material.isTextured() ? 1 : 0);
         setUniform(uniformName + ".reflectance", material.getReflectance());
+    }
+
+    public void setUniform(String uniformName, Matrix4f[] matrices) {
+        // Dump the matrix into a float buffer
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            FloatBuffer fb = BufferUtils.createFloatBuffer(16 * matrices.length);
+            for (int i=0; i < matrices.length; i++)
+                matrices[i].get(16*i, fb);
+
+            glUniformMatrix4fv(uniforms.get(uniformName), false, fb);
+        }
     }
 
     public void bind() {

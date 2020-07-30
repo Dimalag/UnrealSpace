@@ -33,11 +33,11 @@ public class EffectBuffer extends UniformBuffer {
     /**
      * количество матриц поворота сложных эффектов, под которых выделена память
      */
-    public static final int COMPLEX_TRANSFORMATION_MATRICES_COUNT = 30;
+    public static final int COMPLEX_TRANSFORMATION_MATRICES_COUNT = 120;
     /**
      * размер одного сложного эффекта
      */
-    private static final int SIZE_COMPLEX_EFFECT = 176 + COMPLEX_TRANSFORMATION_MATRICES_COUNT * 64;
+    private static final int SIZE_COMPLEX_EFFECT = 176;// + COMPLEX_TRANSFORMATION_MATRICES_COUNT * 64;
 
     /**
      * размер памяти для массива типов или очереди индексов всех эффектов
@@ -104,6 +104,7 @@ public class EffectBuffer extends UniformBuffer {
                 if (!complexRotationEffect.isStaticInitializedInShader()) {
                     //set static data
                     Septet<Vector, Float, Vector, Vector, Matrix4f[], Matrix4f, Matrix4f> data = complexRotationEffect.getStaticDataAndSetShader().getValue();
+                    complexRotationEffect.unsetStaticData();//!!!only for test!!!
 
                     super.setSubData(SIZE_TO_PERSON_LOCATION_AND_COUNTS + 2 * SIZE_TRANSFORMATIONS_QUEUE + SIMPLE_EFFECTS_COUNT * SIZE_SIMPLE_EFFECT + index * SIZE_COMPLEX_EFFECT,
                             data.getValue0());
@@ -119,9 +120,9 @@ public class EffectBuffer extends UniformBuffer {
                         super.setSubData(SIZE_TO_PERSON_LOCATION_AND_COUNTS + 2 * SIZE_TRANSFORMATIONS_QUEUE + SIMPLE_EFFECTS_COUNT * SIZE_SIMPLE_EFFECT + index * SIZE_COMPLEX_EFFECT + 48 + 64*i,
                                 rotationMatrices[i]);
 
-                    super.setSubData(SIZE_TO_PERSON_LOCATION_AND_COUNTS + 2 * SIZE_TRANSFORMATIONS_QUEUE + SIMPLE_EFFECTS_COUNT * SIZE_SIMPLE_EFFECT + index * SIZE_COMPLEX_EFFECT + 48 + 64*COMPLEX_TRANSFORMATION_MATRICES_COUNT,
+                    super.setSubData(SIZE_TO_PERSON_LOCATION_AND_COUNTS + 2 * SIZE_TRANSFORMATIONS_QUEUE + SIMPLE_EFFECTS_COUNT * SIZE_SIMPLE_EFFECT + index * SIZE_COMPLEX_EFFECT + 48,// + 64*COMPLEX_TRANSFORMATION_MATRICES_COUNT,
                             data.getValue5());
-                    super.setSubData(SIZE_TO_PERSON_LOCATION_AND_COUNTS + 2 * SIZE_TRANSFORMATIONS_QUEUE + SIMPLE_EFFECTS_COUNT * SIZE_SIMPLE_EFFECT + index * SIZE_COMPLEX_EFFECT + 112 + 64*COMPLEX_TRANSFORMATION_MATRICES_COUNT,
+                    super.setSubData(SIZE_TO_PERSON_LOCATION_AND_COUNTS + 2 * SIZE_TRANSFORMATIONS_QUEUE + SIMPLE_EFFECTS_COUNT * SIZE_SIMPLE_EFFECT + index * SIZE_COMPLEX_EFFECT + 112,// + 64*COMPLEX_TRANSFORMATION_MATRICES_COUNT,
                             data.getValue6());
                 }
 

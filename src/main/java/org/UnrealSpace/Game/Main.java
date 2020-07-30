@@ -1,7 +1,6 @@
 package org.UnrealSpace.Game;
 
 import org.UnrealSpace.Console.Console;
-import org.UnrealSpace.Database.Database;
 import org.UnrealSpace.Engine.GameEngine;
 import org.UnrealSpace.Engine.IGameLogic;
 
