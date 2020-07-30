@@ -111,7 +111,6 @@ mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformati
 
 
 
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*//calculating distance from object vertex to person location with projection to direction axes
     float integerPart = 0;
