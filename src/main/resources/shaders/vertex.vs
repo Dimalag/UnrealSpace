@@ -95,7 +95,7 @@ float value_to_0_2PI_diapazon(float value)
         return 2*M_PI - value;
     return value;
 }
-aaaaaaaaaaaaaa
+
 mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformation)
 {
     //calculating distance from object vertex to person location with projection to direction axes
