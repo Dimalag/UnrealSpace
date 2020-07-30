@@ -107,7 +107,7 @@ mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformati
     float angle = 2 * M_PI * dist / complexTransformation.distance * complexTransformation.coefficient;
 
     int index = int(value_to_0_2PI_diapazon(angle) / 2 / M_PI * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);
-
+    mat4 test = rotationMatrices[0];
 
 
 
@@ -119,33 +119,17 @@ mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformati
     //calculating rotation angle
     //float angle = 2 * M_PI * dist / complexTransformation.distance * complexTransformation.coefficient;
     int index = int(abs(dist) / complexTransformation.distance * complexTransformation.coefficient * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);
-    //int index = int(personLocation.z * complexTransformation.coefficient);*/
+    //int index = int(personLocation.z * complexTransformation.coefficient);
     mat4 result = complexTransformation.offsetTranslate;
     if (index >= 0 && index < COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE)
         result = result * rotationMatrices[index];
     else
-<<<<<<< HEAD
-        return complexTransformation.rotationMatrices[COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE/2];*/
-
-
-
-
-
-
-
-
-
-    float ca = cos(angle);
-=======
-        result = result * mat4(0);
-    result = result * complexTransformation.offsetTranslateNegative;
-    return result;
+        return rotationMatrices[COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE/2];*/
 
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*float ca = cos(angle);
->>>>>>> master
+    float ca = cos(angle);
     float sa = sin(angle);
     //calculating rotation matrix around direction axis on angle
     mat4 result = complexTransformation.offsetTranslate;
