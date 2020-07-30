@@ -10,14 +10,13 @@ import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 import static org.lwjgl.opengl.GL46.*;
 
 public class UniformBuffer {
-    public final int SIMPLE_TRANSFORMATION_MAX_SIZE = 16;
-    public final int COMPLEX_TRANSFORMATION_MAX_SIZE = 16;
-    public final int ALL_TRANSFORMATION_MAX_SIZE = SIMPLE_TRANSFORMATION_MAX_SIZE + COMPLEX_TRANSFORMATION_MAX_SIZE;
     public final int SIMPLE_MATRIX_TYPE = 1;
     public final int COMPLEX_ROTATION_TYPE = 2;
 
     protected final int uboId;
     protected final int indexShaderBinding;
+
+    //private final FloatBuffer buffer;
 
     /**
      * @param indexShaderBinding индекс для привязки к интерфейсу шейдера(binding = ...)
@@ -30,14 +29,12 @@ public class UniformBuffer {
             uboId = glGenBuffers();
             glBindBuffer(GL_UNIFORM_BUFFER, uboId);
             uboBuffer = MemoryUtil.memAllocFloat(size);
-            glBufferData(GL_UNIFORM_BUFFER, uboBuffer, GL_STATIC_DRAW); // выделяем size байт памяти
+            glBufferData(GL_UNIFORM_BUFFER, uboBuffer, GL_DYNAMIC_DRAW); // выделяем size байт памяти
             glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
             glBindBufferRange(GL_UNIFORM_BUFFER, indexShaderBinding, uboId, 0, size);
         } finally {
-            if (uboBuffer != null) {
-                MemoryUtil.memFree(uboBuffer);
-            }
+            MemoryUtil.memFree(uboBuffer);
         }
     }
 

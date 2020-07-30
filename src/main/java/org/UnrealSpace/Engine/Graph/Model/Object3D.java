@@ -94,18 +94,10 @@ public class Object3D implements ISaveLoadable {
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
         } finally {
-            if (posBuffer != null) {
-                MemoryUtil.memFree(posBuffer);
-            }
-            if (textCoordsBuffer != null) {
-                MemoryUtil.memFree(textCoordsBuffer);
-            }
-            if (vecNormalsBuffer != null) {
-                MemoryUtil.memFree(vecNormalsBuffer);
-            }
-            if (indicesBuffer != null) {
-                MemoryUtil.memFree(indicesBuffer);
-            }
+            MemoryUtil.memFree(posBuffer);
+            MemoryUtil.memFree(textCoordsBuffer);
+            MemoryUtil.memFree(vecNormalsBuffer);
+            MemoryUtil.memFree(indicesBuffer);
         }
     }
 
@@ -175,6 +167,8 @@ public class Object3D implements ISaveLoadable {
 
     public void cleanup() {
         glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
 
         // Delete the VBOs
         glBindBuffer(GL_ARRAY_BUFFER, 0);
