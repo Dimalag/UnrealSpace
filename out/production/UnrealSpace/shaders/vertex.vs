@@ -105,7 +105,7 @@ mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformati
     float angle = 2 * M_PI * dist / complexTransformation.distance * complexTransformation.coefficient;
 
     int index = int(value_to_0_2PI_diapazon(angle) / 2 / M_PI * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);*/
-
+    int test = 0;
 
 
 
