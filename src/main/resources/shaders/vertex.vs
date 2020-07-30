@@ -95,22 +95,22 @@ float value_to_0_2PI_diapazon(float value)
         return 2*M_PI - value;
     return value;
 }
-
+aaaaaaaaaaaaaa
 mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformation)
 {
-    /*//calculating distance from object vertex to person location with projection to direction axes
+    //calculating distance from object vertex to person location with projection to direction axes
     vec3 dir = complexTransformation.direction;
     float dist = dot(personLocation - position, dir) / length(dir);
     //calculating rotation angle
     float angle = 2 * M_PI * dist / complexTransformation.distance * complexTransformation.coefficient;
 
-    int index = int(value_to_0_2PI_diapazon(angle) / 2 / M_PI * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);*/
+    int index = int(value_to_0_2PI_diapazon(angle) / 2 / M_PI * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);
 
 
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //calculating distance from object vertex to person location with projection to direction axes
+    /*//calculating distance from object vertex to person location with projection to direction axes
     float integerPart = 0;
     vec3 dir = complexTransformation.direction;
     float dist = modf(dot(personLocation - position, dir) / length(dir), integerPart);
@@ -121,7 +121,7 @@ mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformati
     if (index >= 0 && index < COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE)
         return complexTransformation.rotationMatrices[index];
     else
-        return complexTransformation.rotationMatrices[COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE/2];
+        return complexTransformation.rotationMatrices[COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE/2];*/
 
 
 
@@ -131,7 +131,7 @@ mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformati
 
 
 
-    /*float ca = cos(angle);
+    float ca = cos(angle);
     float sa = sin(angle);
     //calculating rotation matrix around direction axis on angle
     mat4 result = complexTransformation.offsetTranslate;
@@ -140,7 +140,7 @@ mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformati
                        (1 - ca) * dir.x * dir.z + sa * dir.y, (1 - ca) * dir.y * dir.z - sa * dir.x, ca + (1 - ca) * dir.z * dir.z, 0,
                                                            0,                                     0,                             0, 1);
     result = result * complexTransformation.offsetTranslateNegative;
-    return result;*/
+    return result;
 }
 
 mat4 calculateTransformations()
