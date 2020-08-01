@@ -8,7 +8,7 @@ import org.UnrealSpace.Helpers.ISaveLoadable;
 public interface IGameLogic extends ISaveLoadable {
     void init(Window window) throws Exception;
     void input(Window window, MouseInput mouseInput, KeyboardInput keyboardInput);
-    void update(float interval, MouseInput mouseInput, KeyboardInput keyboardInput);
+    void update(float interval, int fps, MouseInput mouseInput, KeyboardInput keyboardInput);
     void render(Window window);
     void cleanup();
 

@@ -1,12 +1,18 @@
 package org.UnrealSpace.Engine;
 
+import org.UnrealSpace.Helpers.FPSAnalyzer;
 import org.UnrealSpace.Helpers.Timer;
 import org.UnrealSpace.Console.Console;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameEngine implements Runnable {
 
     public static final int TARGET_FPS = 75;
     public static final int TARGET_UPS = 100;
+
+    private final FPSAnalyzer fpsAnalyzer;
 
     private final Window window;
 
@@ -23,6 +29,7 @@ public class GameEngine implements Runnable {
         timer = new Timer();
         mouseInput = new MouseInput();
         keyboardInput = new KeyboardInput();
+        fpsAnalyzer = new FPSAnalyzer();
     }
 
     @Override
@@ -53,6 +60,8 @@ public class GameEngine implements Runnable {
         while (running && !window.windowShouldClose()) {
             elapsedTime = timer.getElapsedTime();
             accumulator += elapsedTime;
+            fpsAnalyzer.calculateFPS(elapsedTime);
+            fpsAnalyzer.printFPS();
 
             input();
 
@@ -63,10 +72,11 @@ public class GameEngine implements Runnable {
 
             render();
 
-            if (!window.isvSync()) {
+            if (window.isvSync()) {
                 sync(); //синхронизация
             }
         }
+        fpsAnalyzer.printFPSAnalytics();
     }
 
     private void sync() {
@@ -89,7 +99,7 @@ public class GameEngine implements Runnable {
     }
 
     protected void update(float interval) {
-        gameLogic.update(interval, mouseInput, keyboardInput);
+        gameLogic.update(interval, fpsAnalyzer.getFPS(), mouseInput, keyboardInput);
     }
 
     protected void render() {

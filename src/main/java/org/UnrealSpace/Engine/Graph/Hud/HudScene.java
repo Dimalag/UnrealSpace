@@ -20,7 +20,7 @@ public class HudScene {
     private final List<GameItem> gameItems;
     private final List<TextItem> textItems;
     private TextItem personLocationTextItem;
-    private TextItem statusTextItem;
+    private TextItem fpsTextItem;
     private Stock stock;
     private KeyStockItem key;
 
@@ -35,17 +35,18 @@ public class HudScene {
         loadHudGameItems(window);
     }
 
-    public void update(Vector personCameraLocation) throws Exception {
-        setText(1,personCameraLocation.toString());
+    public void update(int fps, Vector personCameraLocation) throws Exception {
+        setText(0, String.valueOf(fps));
+        setText(1, personCameraLocation.toString());
     }
 
     private void loadTextItems(Window window) throws Exception {
         //приветственная надпись
         FontTexture fontTexture = new FontTexture(FONT, CHARSET);
-        statusTextItem = new TextItem("Добро пожаловать!!!", fontTexture);
-        statusTextItem.getObject3D().getMaterial().setAmbientColour(new Vector4f(0.7f, 0.5f, 0.9f, 1));
-        statusTextItem.setLocation(10f, window.getHeight()-50f,0);
-        textItems.add(statusTextItem);
+        fpsTextItem = new TextItem("FPS:", fontTexture);
+        fpsTextItem.getObject3D().getMaterial().setAmbientColour(new Vector4f(0.7f, 0.5f, 0.9f, 1));
+        fpsTextItem.setLocation(10f, window.getHeight()-50f,0);
+        textItems.add(fpsTextItem);
 
         //положение персонажа
         personLocationTextItem = new TextItem(" ", fontTexture);
