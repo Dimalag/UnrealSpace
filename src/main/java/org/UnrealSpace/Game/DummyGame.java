@@ -50,14 +50,14 @@ public class DummyGame implements IGameLogic {
     }
 
     @Override
-    public void update(float interval, MouseInput mouseInput, KeyboardInput keyboardInput) {
+    public void update(float interval, int fps, MouseInput mouseInput, KeyboardInput keyboardInput) {
         personCamera.moveRotate(interval, mouseInput, keyboardInput);
         lightScene.update(interval, effectScene.getActualSimpleEffects(), personCamera);
         effectScene.update(personCamera);
         try {
             if (mouseInput.isRightButtonPressed())
                 hudScene.setKey("/models/", "key.obj", 0);
-            hudScene.update(personCamera.getCamera().getLocationWB());
+            hudScene.update(fps, personCamera.getCamera().getLocationWB());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

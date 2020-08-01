@@ -22,7 +22,7 @@ public class MouseInput {
 
     public MouseInput() {
         //previousPos = new Vector2d(0, 0);
-        currentPos = new Vector2d(0, 0);
+        currentPos = new Vector2d();
         offsetVec = new Vector2f();
     }
 

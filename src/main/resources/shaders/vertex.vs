@@ -1,4 +1,4 @@
-#version 460
+#version 420
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 textureCoord;
@@ -8,14 +8,14 @@ out vec2 fragTextureCoord;
 out vec3 fragMVVertexNormal;
 out vec3 fragMVVertexPos;
 
-const float M_PI = 3.1415926535897932384626433832795;
+const float M_PI = 3.14159265359;
 const int SIMPLE_TRANSFORMATION_MAX_SIZE = 16;
 const int COMPLEX_TRANSFORMATION_MAX_SIZE = 16;
 const int ALL_TRANSFORMATION_MAX_SIZE = SIMPLE_TRANSFORMATION_MAX_SIZE + COMPLEX_TRANSFORMATION_MAX_SIZE;
 const int SIMPLE_MATRIX_TYPE = 1;
 const int COMPLEX_ROTATION_TYPE = 2;
 
-const int COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE = 120; //rotation matrices count in complex effects
+const int COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE = 360; //rotation matrices count in complex effects
 
 struct SimpleTransformation
 {
@@ -81,7 +81,10 @@ layout (std140, binding = 1) uniform TransformationsBlock
 uniform int isPerson;
 uniform mat4 model;
 
-uniform mat4 rotationMatrices[120]; // complex rotation matrices
+/*layout (std140, binding = 1) uniform TransformationsBlock
+{
+    uniform mat4 rotationMatrices[COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE]; // complex rotation matrices
+};*/
 
 float value_to_0_2PI_diapazon(float value)
 {
@@ -107,7 +110,6 @@ mat4 createComplexTransformationMatrix(ComplexTransformation complexTransformati
     float angle = 2 * M_PI * dist / complexTransformation.distance * complexTransformation.coefficient;
 
     int index = int(value_to_0_2PI_diapazon(angle) / 2 / M_PI * COMPLEX_TRANSFORMATION_MATRICES_MAX_SIZE);
-    mat4 test = rotationMatrices[0];
 
 
 

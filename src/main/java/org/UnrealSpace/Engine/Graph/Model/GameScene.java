@@ -79,7 +79,7 @@ public class GameScene implements ISaveLoadable {
         gameItem7.setRotation(new Quaternion(new Angle(90), 1,0,0));
         gameItems.add(gameItem7);*/
 
-        Model model4 = ModelLoader.loadModel("/models/", "room-obj.obj");
+        Model model4 = ModelLoader.loadModel("/models/", "test.obj");
         models.add(model4);
         for (Object3D obj: model4.getObject3DS()) {
             GameItem gameItemI = new GameItem(obj);
